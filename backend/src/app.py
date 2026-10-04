@@ -165,6 +165,21 @@ def update_me():
     return jsonify({"user": store.user_dict(row)})
 
 
+@app.post("/me/password")
+def change_password():
+    if (r := need_user()):
+        return r
+    d = request.get_json(silent=True) or {}
+    cur, new = str(d.get("current_password", "")), str(d.get("new_password", ""))
+    if not check_password_hash(g.user["pw_hash"], cur):
+        return err("Your current password is incorrect.", 400)
+    if len(new) < 8:
+        return err("New password must be at least 8 characters.", 400)
+    with store.conn() as c:
+        c.execute("UPDATE users SET pw_hash=? WHERE id=?", (generate_password_hash(new), g.user["id"]))
+    return jsonify({"ok": True})
+
+
 @app.delete("/me")
 def delete_me():
     if (r := need_user()):

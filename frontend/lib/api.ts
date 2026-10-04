@@ -68,6 +68,8 @@ export const login = (b: { email: string; password: string }) =>
 export const getMe = (token: string) => request<{ user: User }>("/me", { token });
 export const updateMe = (token: string, b: { name?: string; language?: string }) =>
   request<{ user: User }>("/me", { method: "PATCH", body: b, token });
+export const changePassword = (token: string, current_password: string, new_password: string) =>
+  request<{ ok: boolean }>("/me/password", { method: "POST", body: { current_password, new_password }, token });
 export const deleteAccount = (token: string) => request<{ ok: boolean }>("/me", { method: "DELETE", token });
 export const getHistory = (token: string) => request<{ items: HistoryItem[] }>("/history", { token });
 export const getHistoryItem = (token: string, id: number) => request<HistoryItem & AnalysisResult>(`/history/${id}`, { token });

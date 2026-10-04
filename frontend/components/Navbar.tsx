@@ -3,7 +3,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Menu, X, LayoutDashboard } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import UserMenu from "./UserMenu";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 import { useAuth } from "./AuthProvider";
@@ -19,7 +21,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const path = usePathname();
-  const { user, ready } = useAuth();
+  const { user, ready, signOut } = useAuth();
+  const router = useRouter();
   useEffect(() => { const f = () => setScrolled(window.scrollY > 12); f(); window.addEventListener("scroll", f, { passive: true }); return () => window.removeEventListener("scroll", f); }, []);
   useEffect(() => setOpen(false), [path]);
 
@@ -37,7 +40,7 @@ export default function Navbar() {
           <ThemeToggle />
           <div className="hidden items-center gap-2 lg:flex">
             {ready && (user ? (
-              <Link href="/dashboard" className="btn btn-primary !py-2 text-sm"><LayoutDashboard size={16} />Dashboard</Link>
+              <UserMenu />
             ) : (<>
               <Link href="/login" className="rounded-full px-3.5 py-2 text-sm text-muted hover:text-fg">Log in</Link>
               <Link href="/signup" className="btn btn-primary !py-2 text-sm">Sign up</Link>
@@ -60,7 +63,11 @@ export default function Navbar() {
               ))}
             </ul>
             <div className="mt-2 grid grid-cols-2 gap-2 border-t border-line pt-3">
-              {user ? <Link href="/dashboard" className="btn btn-primary col-span-2">Dashboard</Link> : (<>
+              {user ? (<>
+                <p className="col-span-2 truncate px-1 text-sm text-muted">Signed in as <span className="font-medium text-fg">{user.name}</span></p>
+                <Link href="/dashboard" className="btn btn-primary">Dashboard</Link>
+                <Link href="/profile" className="btn btn-ghost">Profile</Link>
+                <button className="btn btn-ghost col-span-2 text-scam" onClick={() => { setOpen(false); signOut(); router.replace("/"); }}>Log out</button></>) : (<>
                 <Link href="/login" className="btn btn-ghost">Log in</Link>
                 <Link href="/signup" className="btn btn-primary">Sign up</Link></>)}
             </div>

@@ -3,14 +3,24 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Check, Loader2, LogOut } from "lucide-react";
 import { useAuth } from "./AuthProvider";
-import { ApiError, clearHistory, deleteAccount, LANGUAGES, Language, updateMe } from "@/lib/api";
+import { ApiError, changePassword, clearHistory, deleteAccount, LANGUAGES, Language, updateMe } from "@/lib/api";
 
 export default function ProfileView() {
   const { user, token, setUser, signOut } = useAuth(); const router = useRouter();
   const [name, setName] = useState(user?.name ?? ""); const [lang, setLang] = useState<Language>(user?.language ?? "English");
   const [state, setState] = useState<"idle" | "saving" | "saved">("idle"); const [error, setError] = useState("");
   const [confirm, setConfirm] = useState<"" | "history" | "account">("");
+  const [cur, setCur] = useState(""), [nw, setNw] = useState("");
+  const [pwState, setPwState] = useState<"idle" | "saving" | "saved">("idle"); const [pwError, setPwError] = useState("");
   if (!user || !token) return null;
+
+  async function savePw(e: React.FormEvent) {
+    e.preventDefault(); setPwError("");
+    if (nw.length < 8) return setPwError("New password must be at least 8 characters.");
+    setPwState("saving");
+    try { await changePassword(token!, cur, nw); setCur(""); setNw(""); setPwState("saved"); setTimeout(() => setPwState("idle"), 2200); }
+    catch (e) { setPwError(e instanceof ApiError ? e.message : "Couldn't change password."); setPwState("idle"); }
+  }
 
   async function save(e: React.FormEvent) {
     e.preventDefault(); setError(""); setState("saving");
@@ -40,6 +50,13 @@ export default function ProfileView() {
           <select id="pl" className="field" value={lang} onChange={(e) => setLang(e.target.value as Language)}>{LANGUAGES.map((l) => <option key={l}>{l}</option>)}</select></div>
         {error && <p role="alert" className="text-sm text-scam">{error}</p>}
         <button className="btn btn-primary" disabled={state === "saving"}>{state === "saving" ? <Loader2 className="animate-spin" size={18} /> : state === "saved" ? <Check size={18} /> : null}{state === "saved" ? "Saved" : "Save changes"}</button>
+      </form>
+      <form onSubmit={savePw} className="glass space-y-4 rounded-3xl p-6">
+        <h2 className="text-lg font-semibold">Change password</h2>
+        <div><label htmlFor="cp" className="mb-1.5 block text-sm font-medium">Current password</label><input id="cp" type="password" autoComplete="current-password" className="field" value={cur} onChange={(e) => setCur(e.target.value)} /></div>
+        <div><label htmlFor="np" className="mb-1.5 block text-sm font-medium">New password</label><input id="np" type="password" autoComplete="new-password" className="field" value={nw} onChange={(e) => setNw(e.target.value)} aria-describedby="np-h" /><p id="np-h" className="mt-1.5 text-xs text-muted">At least 8 characters.</p></div>
+        {pwError && <p role="alert" className="text-sm text-scam">{pwError}</p>}
+        <button className="btn btn-ghost" disabled={pwState === "saving" || !cur || !nw}>{pwState === "saving" ? <Loader2 className="animate-spin" size={18} /> : pwState === "saved" ? <Check size={18} /> : null}{pwState === "saved" ? "Password updated" : "Update password"}</button>
       </form>
       <section className="glass rounded-3xl p-6">
         <h2 className="text-lg font-semibold">Privacy &amp; data</h2>
