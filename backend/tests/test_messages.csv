@@ -1,0 +1,6 @@
+message,expected
+Your bank KYC expires today. Click bit.ly/xxxx to update.,SCAM
+Your electricity will be disconnected tonight. Call 98XXXXXXXX immediately.,SCAM
+"Congratulations! You won ₹25,00,000. Pay ₹5,000 processing fee.",SCAM
+Your OTP for login is 123456. Do not share it with anyone.,SAFE
+"Offer letter: pay ₹4,500 registration fee to confirm your internship.",SCAM
