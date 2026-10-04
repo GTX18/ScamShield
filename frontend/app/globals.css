@@ -32,6 +32,7 @@
 }
 
 html { scroll-behavior: smooth; }
+html, body { overflow-x: clip; max-width: 100%; }
 body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 html.theme-anim, html.theme-anim * { transition: background-color .45s ease, color .45s ease, border-color .45s ease, box-shadow .45s ease !important; }
 ::selection { background: color-mix(in srgb, var(--accent) 35%, transparent); }
@@ -68,4 +69,12 @@ html.theme-anim, html.theme-anim * { transition: background-color .45s ease, col
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Nested panels: same look as .glass but WITHOUT backdrop-filter (nested blur renders badly on iOS/Android and is slow). */
+.surface { background: var(--glass); border: 1px solid var(--glass-border); }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+@media (max-width: 640px) {
+  .glass, .glass-strong { backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%); }
 }

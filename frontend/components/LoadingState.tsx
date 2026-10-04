@@ -8,7 +8,7 @@ const STAGES = ["Reading message…", "Checking language patterns…", "Scanning
 /** Pulsing glass layers with particles orbiting a core. Transform/opacity only. */
 function Orbit() {
   return (
-    <div aria-hidden className="relative mx-auto h-36 w-36">
+    <div aria-hidden className="relative mx-auto h-28 w-28 sm:h-36 sm:w-36">
       {[0, 1, 2].map((i) => (
         <motion.span key={i} className="glass absolute inset-0 rounded-full" initial={{ scale: .45, opacity: 0 }}
           animate={{ scale: [.45 + i * .1, 1 + i * .08], opacity: [.7, 0] }} transition={{ duration: 2.4, repeat: Infinity, delay: i * .8, ease: "easeOut" }} />
@@ -29,10 +29,10 @@ export default function LoadingState({ message }: { message: string }) {
   const [i, setI] = useState(0);
   useEffect(() => { const t = setInterval(() => setI((n) => Math.min(n + 1, STAGES.length - 1)), 420); return () => clearInterval(t); }, []);
   return (
-    <div role="status" aria-live="polite" className="glass-strong relative overflow-hidden rounded-3xl p-6 sm:p-8">
+    <div role="status" aria-live="polite" className="relative overflow-hidden p-5 sm:p-8">
       <div className="relative mx-auto max-w-xl">
         <Orbit />
-        <div className="glass relative mt-6 overflow-hidden rounded-3xl p-5 text-[15px] leading-relaxed">
+        <div className="surface relative mt-6 overflow-hidden rounded-3xl p-5 text-[15px] leading-relaxed">
           <p className="line-clamp-4 text-muted [mask-image:linear-gradient(#000_55%,transparent)]">{message}</p>
           <motion.div aria-hidden className="absolute inset-x-0 h-14 will-change-transform" style={{ background: "linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent) 35%, transparent), transparent)" }}
             initial={{ y: -56 }} animate={{ y: 150 }} transition={{ duration: 1.6, repeat: Infinity, ease: "linear" }} />

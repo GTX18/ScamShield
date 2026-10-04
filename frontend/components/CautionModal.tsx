@@ -38,7 +38,7 @@ export default function CautionModal({ open, variant, onClose, onSecondary, seco
         <motion.div className="fixed inset-0 z-[80] grid place-items-center bg-[#02050f]/70 p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
           <motion.div role="alertdialog" aria-modal="true" aria-labelledby="caution-title" onClick={(e) => e.stopPropagation()}
             initial={{ opacity: 0, y: 24, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12, scale: .97 }}
-            className="glass-strong gradient-border w-full max-w-md rounded-3xl p-6 sm:p-7">
+            className="glass-strong gradient-border max-h-[90dvh] w-full max-w-md overflow-y-auto rounded-3xl p-5 sm:p-7">
             <div className="flex items-start justify-between gap-4">
               <span className={`grid h-12 w-12 place-items-center rounded-2xl ${c.tone}`}><Icon size={24} /></span>
               <button onClick={onClose} aria-label="Close" className="rounded-full p-2 text-muted hover:text-fg"><X size={18} /></button>

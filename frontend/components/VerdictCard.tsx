@@ -21,8 +21,8 @@ export default function VerdictCard({ verdict, score, mlScore }: { verdict: Verd
         <div>
           <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[.14em] ${u.bg} ${u.cls}`}>{u.level}</span>
           <div className={`mt-4 flex items-center gap-3 ${u.cls}`}>
-            <motion.span initial={{ rotate: -20, scale: .5 }} animate={{ rotate: 0, scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 14, delay: .15 }}><Icon size={44} strokeWidth={1.8} aria-hidden /></motion.span>
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">{u.label}</h2>
+            <motion.span initial={{ rotate: -20, scale: .5 }} animate={{ rotate: 0, scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 14, delay: .15 }}><Icon size={38} strokeWidth={1.8} aria-hidden /></motion.span>
+            <h2 className="text-2xl font-semibold tracking-tight min-[400px]:text-3xl sm:text-4xl">{u.label}</h2>
           </div>
           <p className="mt-2 text-muted">{u.sub}</p>
           <dl className="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-sm">
@@ -30,7 +30,7 @@ export default function VerdictCard({ verdict, score, mlScore }: { verdict: Verd
             <div><dt className="text-muted">Combined risk</dt><dd className="text-lg font-semibold tabular-nums">{Math.round(score * 100)}%</dd></div>
           </dl>
         </div>
-        <RiskMeter score={score} verdict={verdict} />
+        <div className="order-first sm:order-none"><RiskMeter score={score} verdict={verdict} /></div>
       </div>
     </motion.section>
   );

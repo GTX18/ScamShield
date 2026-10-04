@@ -25,9 +25,9 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6">
-      <nav aria-label="Main" className={`mx-auto flex max-w-6xl items-center justify-between rounded-full px-4 py-2.5 transition-all duration-300 sm:px-5 ${scrolled ? "glass-strong" : "glass"}`}>
+      <nav aria-label="Main" className={`mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full px-4 py-2.5 transition-all duration-300 sm:px-5 ${scrolled ? "glass-strong" : "glass"}`}>
         <Logo />
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-1 lg:flex">
           {LINKS.map((l) => (
             <li key={l.href}><Link href={l.href} aria-current={path === l.href ? "page" : undefined}
               className={`rounded-full px-3.5 py-2 text-sm transition-colors hover:text-fg ${path === l.href ? "bg-[var(--line)] text-fg" : "text-muted"}`}>{l.label}</Link></li>
@@ -35,7 +35,7 @@ export default function Navbar() {
         </ul>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <div className="hidden items-center gap-2 md:flex">
+          <div className="hidden items-center gap-2 lg:flex">
             {ready && (user ? (
               <Link href="/dashboard" className="btn btn-primary !py-2 text-sm"><LayoutDashboard size={16} />Dashboard</Link>
             ) : (<>
@@ -43,7 +43,7 @@ export default function Navbar() {
               <Link href="/signup" className="btn btn-primary !py-2 text-sm">Sign up</Link>
             </>))}
           </div>
-          <button className="glass grid h-10 w-10 place-items-center rounded-full md:hidden" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen((o) => !o)}>
+          <button className="glass grid h-10 w-10 place-items-center rounded-full lg:hidden" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen((o) => !o)}>
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
@@ -51,7 +51,7 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div id="mobile-menu" initial={{ opacity: 0, y: -12, filter: "blur(6px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -12 }}
-            className="glass-strong mx-auto mt-2 max-w-6xl rounded-3xl p-3 md:hidden">
+            className="glass-strong mx-auto mt-2 max-w-6xl rounded-3xl p-3 lg:hidden">
             <ul className="flex flex-col">
               {LINKS.map((l, i) => (
                 <motion.li key={l.href} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * .04 }}>

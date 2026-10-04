@@ -11,10 +11,10 @@ export default function MessageInput({ value, onChange, onClear, disabled }: { v
           <Eraser size={15} aria-hidden />Clear
         </button>
       </div>
-      <div className="glass rounded-3xl p-1.5 transition-shadow focus-within:shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_20%,transparent)]">
-        <textarea id="msg" value={value} disabled={disabled} maxLength={MAX_CHARS} rows={7} onChange={(e) => onChange(e.target.value)}
+      <div className="surface rounded-3xl p-1.5 transition-shadow focus-within:shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_20%,transparent)]">
+        <textarea id="msg" value={value} disabled={disabled} maxLength={MAX_CHARS} rows={5} onChange={(e) => onChange(e.target.value)}
           placeholder="Your KYC expires today. Click this link to avoid account suspension…"
-          aria-describedby="msg-help" className="block min-h-[11rem] w-full resize-y rounded-[1.35rem] bg-transparent p-4 text-base leading-relaxed placeholder:text-muted/60 focus:outline-none sm:p-5" />
+          aria-describedby="msg-help" className="block min-h-[9rem] w-full sm:min-h-[11rem] resize-y rounded-[1.35rem] bg-transparent p-4 text-base leading-relaxed placeholder:text-muted/60 focus:outline-none sm:p-5" />
       </div>
       <div id="msg-help" className="mt-2.5 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-xs text-muted">
         <span className="flex items-center gap-1.5"><Lock size={13} aria-hidden />Don&apos;t include passwords, OTPs, or other private information.</span>

@@ -69,7 +69,7 @@ export default function MessageAnalyzer() {
               <button onClick={reset} className="btn btn-ghost !py-2 text-sm"><ArrowLeft size={16} />Check another message</button>
               <LanguageSelector value={language} onChange={setLanguage} disabled />
             </div>
-            <motion.blockquote layoutId="msgbox" className="glass mb-4 rounded-2xl p-4 text-sm text-muted">
+            <motion.blockquote layoutId="msgbox" className="surface mb-4 rounded-2xl p-4 text-sm text-muted">
               <span className="mb-1 block text-xs font-semibold uppercase tracking-[.14em]">Message checked</span>
               <span className="line-clamp-4 whitespace-pre-line [overflow-wrap:anywhere]">{message}</span>
             </motion.blockquote>
@@ -100,15 +100,15 @@ export default function MessageAnalyzer() {
             </AnimatePresence>
             <MessageInput value={message} onChange={(v) => { setMessage(v); setFormError(""); }} onClear={() => { setMessage(""); setFormError(""); }} />
             {formError && <p role="alert" className="mt-3 text-sm font-medium text-scam">{formError}</p>}
-            <div className="mt-4 flex flex-wrap items-center gap-2" aria-label="Example messages">
-              <span className="text-xs text-muted">Try an example:</span>
+            <div className="mt-4 flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar sm:flex-wrap sm:overflow-visible" aria-label="Example messages">
+              <span className="shrink-0 text-xs text-muted">Try an example:</span>
               {EXAMPLES.map((ex, i) => (
-                <button key={i} type="button" onClick={() => { setMessage(ex); setFormError(""); }} className="glass max-w-[16rem] truncate rounded-full px-3 py-1.5 text-xs text-muted transition-colors hover:text-fg">{ex}</button>
+                <button key={i} type="button" onClick={() => { setMessage(ex); setFormError(""); }} className="surface max-w-[16rem] shrink-0 truncate rounded-full px-3 py-1.5 text-xs text-muted transition-colors hover:text-fg">{ex}</button>
               ))}
             </div>
             <div className="mt-6 flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
-              <LanguageSelector value={language} onChange={setLanguage} />
-              <Magnetic className="sm:w-auto">
+              <LanguageSelector value={language} onChange={setLanguage} className="flex w-full sm:inline-flex sm:w-auto" />
+              <Magnetic className="w-full sm:w-auto">
                 <button type="submit" className="btn btn-primary w-full !px-8 !py-3.5 text-base sm:w-auto">
                   {phase === "error" ? <RotateCw size={18} /> : <ScanSearch size={18} />}{phase === "error" ? "Try again" : "Analyze Message"}
                 </button>
